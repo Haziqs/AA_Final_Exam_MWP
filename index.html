@@ -1,0 +1,81 @@
+<!-- FILE OWNER: Member 1 (Haziq) — others do not edit -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Group Portfolio</title>
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+<!-- ============================= LANDING SECTION ============================= -->
+<section id="landing">
+  <div id="hero-text">
+    <h1>Group Name — Portfolio Title</h1>
+    <p>Professional tagline goes here</p>
+  </div>
+  <div class="hint">drag to orbit · scroll to zoom · click a shape · arrow keys to nudge camera</div>
+</section>
+
+<!-- ============================= ABOUT US (placeholder — not this task) ============================= -->
+<section id="about" class="placeholder-section">
+  <h2>About Us</h2>
+  <p>TODO: member profiles, education, career interests, achievements</p>
+</section>
+
+<!-- ============================= SKILLS SHOWCASE ============================= -->
+<section id="skills">
+  <div id="section-heading"><h2>Skills Showcase</h2></div>
+  <div id="member-tabs"></div>
+  <div id="skill-panel">
+    <h3 id="skill-name">Skill name</h3>
+    <div class="category" id="skill-category">Category</div>
+    <div id="skill-bar-track"><div id="skill-bar-fill"></div></div>
+    <div id="skill-level-text">0%</div>
+  </div>
+  <div class="hint">hover a sphere to inspect · click to lock the panel · drag to orbit</div>
+</section>
+
+<!-- ============================= PROJECT GALLERY ============================= -->
+<section id="gallery">
+  <div id="gallery-heading"><h2>Project Gallery</h2></div>
+  <div id="gallery-member-tabs"></div>
+
+  <div id="gallery-detail-panel">
+    <button id="gallery-detail-close" aria-label="Close">&times;</button>
+    <h3 id="gallery-project-title">Project title</h3>
+    <p id="gallery-project-desc">Description</p>
+    <div id="gallery-project-tech"></div>
+    <div id="gallery-project-media">Media placeholder</div>
+  </div>
+
+  <div class="hint">drag to orbit · click a card for details · arrow keys to rotate the carousel</div>
+</section>
+
+<!-- ============================= CONTACT (placeholder — not this task) ============================= -->
+<section id="contact" class="placeholder-section">
+  <h2>Contact</h2>
+  <p>TODO: contact info, social links, contact form</p>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+<!-- Data -->
+<script src="data/member1-data.js"></script>
+<script src="data/member2-data.js"></script>
+<script src="data/member3-data.js"></script>
+<script src="data/member4-data.js"></script>
+
+<!-- Shared Utilities -->
+<script src="js/shared.js"></script>
+
+<!-- Scenes -->
+<script src="js/landing.js"></script>
+<script src="js/about.js"></script>
+<script src="js/skills.js"></script>
+<script src="js/gallery.js"></script>
+<script src="js/contact.js"></script>
+
+</body>
+</html>
