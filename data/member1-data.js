@@ -19,8 +19,8 @@ window.MEMBER1_DATA = {
     { name: 'Node.js', category: 'Backend', level: 0.62 }
   ],
   projects: [
-    { title: 'Butterfly vs Owl Classifier', description: 'A CNN image classification model distinguishing butterflies from owls, trained and compared across two frameworks.', tech: ['TensorFlow', 'Keras', 'WEKA'], mediaSrc: '' },
-    { title: 'PulseForge Product Page', description: 'An interactive 3D product landing page concept for wireless earbuds.', tech: ['React Three Fiber', 'Vite'], mediaSrc: '' },
-    { title: 'Smart Presentation Evaluator', description: 'A computer-vision and AI system for academic presentation assessment.', tech: ['OpenCV', 'MediaPipe', 'Whisper', 'SBERT'], mediaSrc: '' }
+    { title: 'Butterfly vs Owl Classifier', description: '...', tech: ['TensorFlow', 'Keras', 'WEKA'], mediaSrc: 'https://picsum.photos/400/300?random=1' },
+    { title: 'PulseForge Product Page', description: '...', tech: ['React Three Fiber', 'Vite'], mediaSrc: 'https://picsum.photos/400/300?random=2' },
+    { title: 'Smart Presentation Evaluator', description: '...', tech: ['OpenCV', 'MediaPipe', 'Whisper', 'SBERT'], mediaSrc: 'https://picsum.photos/400/300?random=3' }
   ]
 };

@@ -19,8 +19,8 @@ window.MEMBER3_DATA = {
     { name: 'Video Editing', category: 'Media', level: 0.55 }
   ],
   projects: [
-    { title: 'Smart Inventory System', description: 'A full-stack warehouse management system featuring real-time stock tracking, automated reordering alerts, and role-based access control for multiple user tiers.', tech: ['Java', 'Spring Boot', 'MySQL'], mediaSrc: '' },
-    { title: 'Robotic Arm Simulator', description: 'A 3D simulation environment built in MATLAB/Simulink to model and control a 5-DOF robotic arm, used as a teaching aid for mechatronics students.', tech: ['MATLAB', 'Simulink'], mediaSrc: '' },
-    { title: 'UTM Event Vibe Promotional Video', description: 'A high-energy promotional video produced for UTM\'s annual innovation showcase, featuring motion graphics, on-site interviews, and atmospheric sound design.', tech: ['Premiere Pro', 'After Effects'], mediaSrc: '' }
+    { title: 'Smart Inventory System', description: 'A full-stack warehouse management system featuring real-time stock tracking, automated reordering alerts, and role-based access control for multiple user tiers.', tech: ['Java', 'Spring Boot', 'MySQL'], mediaSrc: 'https://picsum.photos/400/300?random=7' },
+    { title: 'Robotic Arm Simulator', description: 'A 3D simulation environment built in MATLAB/Simulink to model and control a 5-DOF robotic arm, used as a teaching aid for mechatronics students.', tech: ['MATLAB', 'Simulink'], mediaSrc: 'https://picsum.photos/400/300?random=8' },
+    { title: 'UTM Event Vibe Promotional Video', description: 'A high-energy promotional video produced for UTM\'s annual innovation showcase, featuring motion graphics, on-site interviews, and atmospheric sound design.', tech: ['Premiere Pro', 'After Effects'], mediaSrc: 'https://picsum.photos/400/300?random=9' }
   ]
 };
