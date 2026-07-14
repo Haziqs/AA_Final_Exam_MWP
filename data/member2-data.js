@@ -1,7 +1,7 @@
 /* FILE OWNER: Member 2 — others do not edit */
-// EDIT THIS
+
 window.MEMBER2_DATA = {
-  name: 'Member 2',
+  name: 'Faris Iskandar bin Zamani',
   about: { role: '', education: '', interests: '', achievements: [] },
   skills: [
     { name: 'Python', category: 'Programming', level: 0.85 },

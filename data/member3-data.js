@@ -1,7 +1,7 @@
 /* FILE OWNER: Member 3 — others do not edit */
-// EDIT THIS
+
 window.MEMBER3_DATA = {
-  name: 'Member 3',
+  name: 'Muhammad Haikal bin Japri',
   about: { role: '', education: '', interests: '', achievements: [] },
   skills: [
     { name: 'Java', category: 'Programming', level: 0.8 },

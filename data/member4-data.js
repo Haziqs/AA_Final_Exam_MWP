@@ -1,7 +1,7 @@
 /* FILE OWNER: Member 4 — others do not edit */
-// EDIT THIS
+
 window.MEMBER4_DATA = {
-  name: 'Member 4',
+  name: 'Harresh a/l Uthayakumar',
   about: { role: '', education: '', interests: '', achievements: [] },
   skills: [
     { name: 'Machine Learning', category: 'AI', level: 0.75 },

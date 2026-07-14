@@ -1,13 +1,17 @@
-/* FILE OWNER: Member 1 (Haziq) — others do not edit */
+/* FILE OWNER: Member 1 — others do not edit */
+
 window.MEMBER1_DATA = {
-  name: 'Member 1',
-  about: { role: '', education: '', interests: '', achievements: [] },
+  name: 'Haziq bin Shahmen',
+  about: { role: 'Frontend Developer', education: 'BSc Computer Graphics and Multimedia, UTM', interests: 'Web3, Image Processing, UI/UX', achievements: [
+    "Dean's List 2023",
+    "Hackathon 2025 Winner"
+  ] },
   skills: [
-    { name: 'JavaScript', category: 'Programming', level: 0.9 },
-    { name: 'Three.js', category: 'Graphics', level: 0.8 },
-    { name: 'React', category: 'Frontend', level: 0.75 },
-    { name: 'UI Design', category: 'Design', level: 0.6 },
-    { name: 'Node.js', category: 'Backend', level: 0.65 }
+    { name: 'JavaScript', category: 'Programming', level: 0.8 },
+    { name: 'Three.js', category: 'Graphics', level: 0.85 },
+    { name: 'React', category: 'Frontend', level: 0.88 },
+    { name: 'UI Design', category: 'Design', level: 0.74 },
+    { name: 'Node.js', category: 'Backend', level: 0.62 }
   ],
   projects: [
     { title: 'Butterfly vs Owl Classifier', description: 'A CNN image classification model distinguishing butterflies from owls, trained and compared across two frameworks.', tech: ['TensorFlow', 'Keras', 'WEKA'], mediaSrc: '' },
