@@ -292,3 +292,14 @@ section canvas {
 #gallery-detail-close:hover {
   color: #6b5d4f;
 }
+
+.scroll-fade {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-fade.visible {
+  opacity: 1;
+  transform: translateY();
+}
