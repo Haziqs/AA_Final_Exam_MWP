@@ -8,7 +8,7 @@
     window.MEMBER4_DATA
   ];
 
-  // Build UI with a proper style block for responsiveness
+  // Build UI with centered layout
   sectionEl.innerHTML = `
     <style>
       #about-cards {
@@ -20,40 +20,41 @@
         pointer-events: none;
         z-index: 10;
         position: absolute;
-        top: 18%;
+        top: 50%;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translate(-50%, -45%);
       }
       .about-card {
-        background: rgba(255,255,255,0.7);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: rgba(20, 18, 30, 0.6);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         border-radius: 16px;
         padding: 1.2rem 1.2rem;
         min-width: 170px;
         max-width: 220px;
         flex: 1 1 auto;
         pointer-events: auto;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.04);
-        border: 1px solid rgba(255,255,255,0.4);
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.06);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       }
       .about-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        transform: translateY(-6px);
+        box-shadow: 0 12px 48px rgba(94, 231, 255, 0.08);
+        border-color: rgba(94, 231, 255, 0.15);
       }
-      .about-card .name { font-weight: 600; font-size: 1.05rem; color: #4a4038; }
-      .about-card .role { font-size: 0.75rem; color: #8a7d70; margin: 0.2rem 0 0.4rem; }
-      .about-card .detail { font-size: 0.7rem; color: #6b5d4f; margin-top: 0.15rem; line-height: 1.4; }
-      .about-card .detail strong { font-weight: 600; color: #4a4038; }
+      .about-card .name { font-weight: 600; font-size: 1.05rem; color: #edeef4; }
+      .about-card .role { font-size: 0.75rem; color: #5ee7ff; margin: 0.2rem 0 0.4rem; }
+      .about-card .detail { font-size: 0.7rem; color: #8a8a9c; margin-top: 0.15rem; line-height: 1.4; }
+      .about-card .detail strong { font-weight: 600; color: #b57bff; }
       @media (max-width: 600px) {
-        #about-cards { top: 14%; gap: 0.8rem; }
+        #about-cards { top: 55%; gap: 0.8rem; }
         .about-card { min-width: 140px; padding: 0.9rem; }
       }
     </style>
-    <div id="about-heading" style="position:absolute;top:6%;left:50%;transform:translateX(-50%);text-align:center;z-index:10;color:#4a4038;pointer-events:none;">
-      <h2 style="font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;margin:0;">About Us</h2>
-      <p style="color:#8a7d70;font-size:1rem;">Meet the team behind the portfolio</p>
+    <div id="about-heading" style="position:absolute;top:6%;left:50%;transform:translateX(-50%);text-align:center;z-index:10;color:#edeef4;pointer-events:none;">
+      <h2 style="font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;margin:0;color:#edeef4;">About Us</h2>
+      <p style="color:#8a8a9c;font-size:1rem;">Meet the team behind the portfolio</p>
     </div>
     <div id="about-cards">
       ${members.map((m) => `
@@ -66,13 +67,24 @@
         </div>
       `).join('')}
     </div>
-    <div class="hint">drag to orbit · hover a shape to highlight</div>
+    <div class="hint" style="color:#8a8a9c;">drag to orbit · hover a shape to highlight</div>
   `;
 
   // ---------- 3D Scene ----------
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf2ede7);
-  scene.fog = new THREE.Fog(0xf2ede7, 8, 18);
+  scene.background = window.getBackgroundTexture();
+  window.addEventListener('themeChanged', function(e) {
+    scene.background = window.getBackgroundTexture();
+    scene.background.needsUpdate = true;
+  });
+  const fogColor = document.body.classList.contains('dark-theme') ? 0x0d0b12 : 0xf2ede7;
+  scene.fog = new THREE.Fog(fogColor, 8, 18);
+
+  // Also update on theme change
+  window.addEventListener('themeChanged', function(e) {
+    const isDark = document.body.classList.contains('dark-theme');
+    scene.fog.color.setHex(isDark ? 0x0d0b12 : 0xf2ede7);
+  });
 
   const camera = new THREE.PerspectiveCamera(45, sectionEl.clientWidth / sectionEl.clientHeight, 0.1, 100);
   camera.position.set(0, 2, 10);
@@ -91,28 +103,40 @@
   controls.maxDistance = 16;
   controls.target.set(0, 0.5, 0);
 
-  // ----- Lights -----
-  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-  const keyLight = new THREE.DirectionalLight(0xffe9dd, 1.0);
+  // Lights
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+  const keyLight = new THREE.DirectionalLight(0xffe9dd, 0.8);
   keyLight.position.set(5, 8, 5);
   keyLight.castShadow = true;
   keyLight.shadow.mapSize.set(1024, 1024);
   scene.add(keyLight);
-  const fillLight = new THREE.DirectionalLight(0xd8e8f0, 0.5);
+  const fillLight = new THREE.DirectionalLight(0x5ee7ff, 0.3);
   fillLight.position.set(-5, 3, -5);
   scene.add(fillLight);
 
-  // ----- Floor -----
+  // Grid
+  const gridHelper = new THREE.GridHelper(10, 16, 0x5ee7ff, 0x5ee7ff);
+  gridHelper.position.y = -1.2;
+  gridHelper.material.transparent = true;
+  gridHelper.material.opacity = 0.1;
+  scene.add(gridHelper);
+
+  // Floor
+  const floorColor = document.body.classList.contains('dark-theme') ? 0x0a0810 : 0xe9e2d8;
   const floor = new THREE.Mesh(
     new THREE.CircleGeometry(9, 64),
-    new THREE.MeshStandardMaterial({ color: 0xe9e2d8, roughness: 0.9, metalness: 0.0 })
+    new THREE.MeshStandardMaterial({ 
+      color: floorColor, 
+      roughness: 0.9, 
+      metalness: 0.0 
+    })
   );
   floor.rotation.x = -Math.PI / 2;
   floor.position.y = -1.2;
   floor.receiveShadow = true;
   scene.add(floor);
 
-  // ----- Particles (atmosphere) -----
+  // Particles
   const particleCount = 120;
   const particleGeo = new THREE.BufferGeometry();
   const particlePos = new Float32Array(particleCount * 3);
@@ -136,7 +160,7 @@
   const particles = new THREE.Points(particleGeo, particleMat);
   scene.add(particles);
 
-  // ----- Member Shapes -----
+  // Member Shapes
   const colors = [0xe8b4b8, 0xa9c6d8, 0xcdb8db, 0xe3cba3];
   const geos = [
     new THREE.TorusKnotGeometry(0.6, 0.2, 64, 16),
@@ -171,17 +195,15 @@
     shapes.push(mesh);
   });
 
-  // ----- Connecting Lines (Team Network) -----
-  const lineMat = new THREE.LineBasicMaterial({ color: 0xd8cabb, transparent: true, opacity: 0.25 });
+  // Connecting Lines
+  const lineMat = new THREE.LineBasicMaterial({ color: 0x5ee7ff, transparent: true, opacity: 0.1 });
   const points = shapes.map(s => s.position.clone());
-  // Connect in a ring
   for (let i = 0; i < points.length; i++) {
     const j = (i + 1) % points.length;
     const geo = new THREE.BufferGeometry().setFromPoints([points[i], points[j]]);
     const line = new THREE.Line(geo, lineMat);
     scene.add(line);
   }
-  // Connect to center
   const center = new THREE.Vector3(0, 0.5, 0);
   points.forEach(p => {
     const geo = new THREE.BufferGeometry().setFromPoints([p, center]);
@@ -189,7 +211,7 @@
     scene.add(line);
   });
 
-  // ----- Raycaster Interaction -----
+  // Raycaster
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
   let hoveredShape = null;
@@ -201,7 +223,6 @@
     raycaster.setFromCamera(pointer, camera);
     const intersects = raycaster.intersectObjects(shapes);
 
-    // Reset previous
     if (hoveredShape) {
       hoveredShape.material.emissiveIntensity = hoveredShape.userData.defaultEmissive;
       hoveredShape.scale.set(1, 1, 1);
@@ -218,7 +239,7 @@
     }
   });
 
-  // ----- Animation Loop -----
+  // Animation
   const clock = new THREE.Clock();
   let running = true;
   let rafId = null;
@@ -234,7 +255,6 @@
       shape.position.y = shape.userData.baseY + Math.sin(t * 1.2 + shape.userData.floatOffset) * 0.25;
     });
 
-    // Rotate particles slowly
     particles.rotation.y += 0.001;
     particles.rotation.x = Math.sin(t * 0.02) * 0.02;
 

@@ -17,8 +17,12 @@
   function colorFor(category) { return categoryColors[category] !== undefined ? categoryColors[category] : 0xd8cabb; }
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf2ede7);
-  scene.fog = new THREE.Fog(0xf2ede7, 8, 20);
+  scene.background = window.getBackgroundTexture();
+  window.addEventListener('themeChanged', function(e) {
+    scene.background = window.getBackgroundTexture();
+    scene.background.needsUpdate = true;
+  });
+  scene.fog = new THREE.Fog(0x0d0b12, 8, 20);
 
   const camera = new THREE.PerspectiveCamera(45, sectionEl.clientWidth / sectionEl.clientHeight, 0.1, 100);
   camera.position.set(0, 3, 9);
@@ -37,16 +41,27 @@
   controls.maxDistance = 13;
   controls.target.set(0, 0.5, 0);
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-  const keyLight = new THREE.DirectionalLight(0xffe9dd, 1.0);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+  const keyLight = new THREE.DirectionalLight(0xffe9dd, 0.8);
   keyLight.position.set(5, 8, 5);
   keyLight.castShadow = true;
   keyLight.shadow.mapSize.set(1024, 1024);
   scene.add(keyLight);
 
+  const gridHelper = new THREE.GridHelper(10, 16, 0x5ee7ff, 0x5ee7ff);
+  gridHelper.position.y = -1.4;
+  gridHelper.material.transparent = true;
+  gridHelper.material.opacity = 0.08;
+  scene.add(gridHelper);
+
+  const floorColor = document.body.classList.contains('dark-theme') ? 0x0a0810 : 0xe9e2d8;
   const floor = new THREE.Mesh(
     new THREE.CircleGeometry(9, 64),
-    new THREE.MeshStandardMaterial({ color: 0xe9e2d8, roughness: 0.9 })
+    new THREE.MeshStandardMaterial({ 
+      color: floorColor, 
+      roughness: 0.9, 
+      metalness: 0.0 
+    })
   );
   floor.rotation.x = -Math.PI / 2;
   floor.position.y = -1.4;
@@ -84,6 +99,23 @@
     scene.add(ringGroup);
   }
   buildRingForMember(0);
+
+  // Update UI styles for dark theme
+  const style = document.createElement('style');
+  style.textContent = `
+    #section-heading h2 { color: #edeef4; }
+    .member-tab { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: #8a8a9c; }
+    .member-tab:hover { background: rgba(255,255,255,0.15); }
+    .member-tab.active { background: #5ee7ff; border-color: #5ee7ff; color: #0a0810; }
+    #skill-panel { background: rgba(20, 18, 30, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); color: #edeef4; }
+    #skill-panel h3 { color: #edeef4; }
+    #skill-panel .category { color: #8a8a9c; }
+    #skill-bar-track { background: rgba(255,255,255,0.05); }
+    #skill-bar-fill { background: linear-gradient(90deg, #5ee7ff, #b57bff); }
+    #skill-level-text { color: #8a8a9c; }
+    .hint { color: #5a5a6a; }
+  `;
+  document.head.appendChild(style);
 
   const tabsContainer = document.getElementById('member-tabs');
   let activeMemberIndex = 0;
