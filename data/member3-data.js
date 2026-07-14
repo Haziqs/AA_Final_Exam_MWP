@@ -2,19 +2,19 @@
 
 window.MEMBER3_DATA = {
   name: 'Muhammad Haikal bin Japri',
-  about: { 
-    role: 'Software Engineer', 
-    education: 'BSc Computer Graphics and Multimedia, UTM', 
-    interests: 'System Architecture, Agile Development, Digital Media Production', 
+  about: {
+    role: 'Software Engineer',
+    education: 'BSc Computer Graphics and Multimedia, UTM',
+    interests: 'System Architecture, Agile Development, Digital Media Production',
     achievements: [
       'Certified Scrum Master (CSM)',
       'Best Research Paper Award (ICoSM 2024)'
-    ] 
+    ]
   },
   skills: [
     { name: 'Java', category: 'Programming', level: 0.88 },
     { name: 'MATLAB', category: 'Engineering', level: 0.79 },
-    { name: 'Project Management', category: 'Soft Skill', level: 0.60 },
+    { name: 'Project Management', category: 'Soft Skill', level: 0.70 },
     { name: 'C++', category: 'Programming', level: 0.63 },
     { name: 'Video Editing', category: 'Media', level: 0.55 }
   ],

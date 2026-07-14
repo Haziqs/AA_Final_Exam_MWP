@@ -16,7 +16,7 @@ window.MEMBER4_DATA = {
     { name: 'TensorFlow', category: 'AI', level: 0.7 },
     { name: 'Report Writing', category: 'Soft Skill', level: 0.8 },
     { name: 'MySQL', category: 'Data', level: 0.65 },
-    { name: 'Teamwork', category: 'Soft Skill', level: 0.81 }
+    { name: 'Teamwork', category: 'Soft Skill', level: 0.78 }
   ],
   projects: [
     { title: 'SentimentScope', description: 'A real-time sentiment analysis pipeline that streams Twitter data, classifies sentiments using a fine-tuned BERT model, and visualises results through an interactive Flask dashboard.', tech: ['TensorFlow', 'Flask', 'React.js'], mediaSrc: '' },
