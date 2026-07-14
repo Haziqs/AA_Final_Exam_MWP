@@ -2,17 +2,25 @@
 
 window.MEMBER3_DATA = {
   name: 'Muhammad Haikal bin Japri',
-  about: { role: '', education: '', interests: '', achievements: [] },
+  about: { 
+    role: 'Software Engineer', 
+    education: 'BSc Computer Graphics and Multimedia, UTM', 
+    interests: 'System Architecture, Agile Development, Digital Media Production', 
+    achievements: [
+      'Certified Scrum Master (CSM)',
+      'Best Research Paper Award (ICoSM 2024)'
+    ] 
+  },
   skills: [
-    { name: 'Java', category: 'Programming', level: 0.8 },
-    { name: 'MATLAB', category: 'Engineering', level: 0.7 },
-    { name: 'Project Management', category: 'Soft Skill', level: 0.65 },
-    { name: 'C++', category: 'Programming', level: 0.6 },
+    { name: 'Java', category: 'Programming', level: 0.88 },
+    { name: 'MATLAB', category: 'Engineering', level: 0.79 },
+    { name: 'Project Management', category: 'Soft Skill', level: 0.60 },
+    { name: 'C++', category: 'Programming', level: 0.63 },
     { name: 'Video Editing', category: 'Media', level: 0.55 }
   ],
   projects: [
-    { title: 'Project Title A', description: 'Brief description of what this project does and the problem it solves.', tech: ['Tech 1', 'Tech 2'], mediaSrc: '' },
-    { title: 'Project Title B', description: 'Brief description of what this project does and the problem it solves.', tech: ['Tech 1', 'Tech 2'], mediaSrc: '' },
-    { title: 'Project Title C', description: 'Brief description of what this project does and the problem it solves.', tech: ['Tech 1', 'Tech 2'], mediaSrc: '' }
+    { title: 'Smart Inventory System', description: 'A full-stack warehouse management system featuring real-time stock tracking, automated reordering alerts, and role-based access control for multiple user tiers.', tech: ['Java', 'Spring Boot', 'MySQL'], mediaSrc: '' },
+    { title: 'Robotic Arm Simulator', description: 'A 3D simulation environment built in MATLAB/Simulink to model and control a 5-DOF robotic arm, used as a teaching aid for mechatronics students.', tech: ['MATLAB', 'Simulink'], mediaSrc: '' },
+    { title: 'UTM Event Vibe Promotional Video', description: 'A high-energy promotional video produced for UTM\'s annual innovation showcase, featuring motion graphics, on-site interviews, and atmospheric sound design.', tech: ['Premiere Pro', 'After Effects'], mediaSrc: '' }
   ]
 };

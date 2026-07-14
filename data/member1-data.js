@@ -2,10 +2,15 @@
 
 window.MEMBER1_DATA = {
   name: 'Haziq bin Shahmen',
-  about: { role: 'Frontend Developer', education: 'BSc Computer Graphics and Multimedia, UTM', interests: 'Web3, Image Processing, UI/UX', achievements: [
-    "Dean's List 2023",
-    "Hackathon 2025 Winner"
-  ] },
+  about: { 
+    role: 'Frontend Developer', 
+    education: 'BSc Computer Graphics and Multimedia, UTM', 
+    interests: 'Web3, Image Processing, UI/UX', 
+    achievements: [
+      "Dean's List 2023",
+      "Hackathon 2025 Winner"
+    ]
+  },
   skills: [
     { name: 'JavaScript', category: 'Programming', level: 0.8 },
     { name: 'Three.js', category: 'Graphics', level: 0.85 },
