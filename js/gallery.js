@@ -15,25 +15,46 @@
     canvas.width = w; canvas.height = h;
     const ctx = canvas.getContext('2d');
 
-    ctx.fillStyle = '#faf5ee';
+    const isDark = document.body.classList.contains('dark-theme');
+    const bgColor = isDark ? '#1a1625' : '#faf5ee';
+    const textColor = isDark ? '#edeef4' : '#4a4038';
+    const mutedColor = isDark ? '#8a8a9c' : '#8a7d70';
+    const accentColor = isDark ? '#5ee7ff' : '#cdb8db';
+
+    ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, w, h);
-    ctx.fillStyle = '#e3cba3';
-    ctx.fillRect(0, 0, w, 10);
+    ctx.fillStyle = accentColor;
+    ctx.fillRect(0, 0, w, 4);
 
-    ctx.fillStyle = '#4a4038';
+    ctx.fillStyle = textColor;
     ctx.font = 'bold 34px Segoe UI, sans-serif';
-    wrapText(ctx, title, 28, 70, w - 56, 40);
+    wrapText(ctx, title, 28, 80, w - 56, 40);
 
-    ctx.fillStyle = '#8a7d70';
+    ctx.fillStyle = mutedColor;
     ctx.font = '20px Segoe UI, sans-serif';
     ctx.fillText(tech.slice(0, 3).join('  ·  '), 28, h - 36);
+
+    // Subtle glow
+    const gradient = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w/2);
+    const glowColor = isDark ? 'rgba(94, 231, 255, 0.02)' : 'rgba(205, 184, 219, 0.03)';
+    gradient.addColorStop(0, glowColor);
+    gradient.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, w, h);
 
     return new THREE.CanvasTexture(canvas);
   }
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf2ede7);
-  scene.fog = new THREE.Fog(0xf2ede7, 8, 20);
+  scene.background = window.getBackgroundTexture();
+  window.addEventListener('themeChanged', function(e) {
+    const isDark = document.body.classList.contains('dark-theme');
+    scene.background = window.getBackgroundTexture();
+    scene.background.needsUpdate = true;
+    floor.material.color.setHex(isDark ? 0x0a0810 : 0xe9e2d8);
+    buildCarouselForMember(activeMemberIndex);
+  });
+  scene.fog = new THREE.Fog(0x0d0b12, 8, 20);
 
   const camera = new THREE.PerspectiveCamera(45, sectionEl.clientWidth / sectionEl.clientHeight, 0.1, 100);
   camera.position.set(0, 1.6, 8);
@@ -52,16 +73,27 @@
   controls.maxDistance = 12;
   controls.target.set(0, 0.8, 0);
 
-  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-  const keyLight = new THREE.DirectionalLight(0xffe9dd, 1.0);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+  const keyLight = new THREE.DirectionalLight(0xffe9dd, 0.8);
   keyLight.position.set(5, 8, 5);
   keyLight.castShadow = true;
   keyLight.shadow.mapSize.set(1024, 1024);
   scene.add(keyLight);
 
+  const gridHelper = new THREE.GridHelper(10, 16, 0x5ee7ff, 0x5ee7ff);
+  gridHelper.position.y = -1.2;
+  gridHelper.material.transparent = true;
+  gridHelper.material.opacity = 0.06;
+  scene.add(gridHelper);
+
+  const floorColor = document.body.classList.contains('dark-theme') ? 0x0a0810 : 0xe9e2d8;
   const floor = new THREE.Mesh(
     new THREE.CircleGeometry(9, 64),
-    new THREE.MeshStandardMaterial({ color: 0xe9e2d8, roughness: 0.9 })
+    new THREE.MeshStandardMaterial({ 
+      color: floorColor, 
+      roughness: 0.9, 
+      metalness: 0.0 
+    })
   );
   floor.rotation.x = -Math.PI / 2;
   floor.position.y = -1.2;
@@ -85,12 +117,12 @@
 
     const projects = membersProjects[memberIndex].projects;
     const radius = 3.6;
-    const sideColor = new THREE.MeshStandardMaterial({ color: 0xddd0bf, roughness: 0.6 });
+    const sideColor = new THREE.MeshStandardMaterial({ color: 0x2a2535, roughness: 0.6 });
 
     projects.forEach((project, i) => {
       const angle = (i / projects.length) * Math.PI * 2;
       const texture = createCardTexture(project.title, project.tech);
-      const frontMat = new THREE.MeshStandardMaterial({ map: texture, roughness: 0.5 });
+      const frontMat = new THREE.MeshStandardMaterial({ map: texture, roughness: 0.4, metalness: 0.2 });
 
       const geometry = new THREE.BoxGeometry(2.1, 1.35, 0.12);
       const materials = [sideColor, sideColor, sideColor, sideColor, frontMat, sideColor];
@@ -98,7 +130,7 @@
 
       card.position.set(Math.cos(angle) * radius, 0.8, Math.sin(angle) * radius);
       card.lookAt(0, 0.8, 0);
-      card.rotateY(Math.PI); 
+      card.rotateY(Math.PI);
       card.castShadow = true;
       card.userData = { project, baseScale: card.scale.clone(), angle };
 
@@ -108,6 +140,24 @@
     scene.add(carousel);
   }
   buildCarouselForMember(0);
+
+  // Update UI styles for dark theme
+  const style = document.createElement('style');
+  style.textContent = `
+    #gallery-heading h2 { color: #edeef4; }
+    #gallery-member-tabs .member-tab { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: #8a8a9c; }
+    #gallery-member-tabs .member-tab:hover { background: rgba(255,255,255,0.15); }
+    #gallery-member-tabs .member-tab.active { background: #5ee7ff; border-color: #5ee7ff; color: #0a0810; }
+    #gallery-detail-panel { background: rgba(20, 18, 30, 0.9); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.05); color: #edeef4; }
+    #gallery-detail-panel h3 { color: #edeef4; }
+    #gallery-detail-panel p { color: #8a8a9c; }
+    .tech-chip { background: rgba(255,255,255,0.05); color: #8a8a9c; }
+    #gallery-detail-close { color: #8a8a9c; }
+    #gallery-detail-close:hover { color: #edeef4; }
+    #gallery-project-media { background: rgba(255,255,255,0.02); color: #5a5a6a; }
+    .hint { color: #5a5a6a; }
+  `;
+  document.head.appendChild(style);
 
   const tabsContainer = document.getElementById('gallery-member-tabs');
   let activeMemberIndex = 0;
@@ -149,7 +199,7 @@
       techEl.appendChild(chip);
     });
     if (project.mediaSrc) {
-      mediaEl.innerHTML = '<img src="' + project.mediaSrc + '" alt="' + project.title + '" />';
+      mediaEl.innerHTML = '<img src="' + project.mediaSrc + '" alt="' + project.title + '" style="width:100%;height:100%;object-fit:cover;" />';
     } else {
       mediaEl.innerHTML = 'Add an image or video path in mediaSrc';
     }
