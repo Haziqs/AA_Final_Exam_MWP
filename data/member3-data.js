@@ -9,6 +9,7 @@ window.MEMBER3_DATA = {
     github: 'https://github.com/hyekaljap'
   },
   about: {
+    image: 'assets/img/member3/img_member3.jpeg',
     role: 'Software Engineer',
     education: 'BSc Computer Graphics and Multimedia, UTM',
     interests: 'UI/UX Design, Software Development, Mobile Application Development',
