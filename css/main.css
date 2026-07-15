@@ -36,6 +36,61 @@ section canvas {
   box-shadow: 0 0 20px rgba(205, 184, 219, 0.3);
 }
 
+/* ---------- GLOBAL SCROLL HINT ---------- */
+#global-scroll-hint {
+  position: fixed;
+  right: 24px;
+  top: 80px;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 50;
+  box-shadow: 0 8px 32px var(--shadow);
+  color: var(--text);
+  opacity: 0.7;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none; /* so it doesn't block clicks */
+}
+
+#global-scroll-hint:hover {
+  opacity: 1;
+}
+
+#global-scroll-hint .scroll-keys {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#global-scroll-hint kbd {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 1px 4px;
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+}
+
+#global-scroll-hint .scroll-text {
+  font-size: 0.65rem;
+  line-height: 1.25;
+  color: var(--muted);
+  font-weight: 500;
+}
+
 /* ---------- THEME VARIABLES ---------- */
 body.light-theme {
   --bg: #f2ede7;
@@ -347,8 +402,8 @@ nav .btn-primary {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.95);
-  width: min(420px, 84vw);
-  max-height: 70vh;
+  width: min(800px, 90vw);
+  max-height: 85vh;
   overflow-y: auto;
   background: var(--panel-bg);
   backdrop-filter: blur(16px);

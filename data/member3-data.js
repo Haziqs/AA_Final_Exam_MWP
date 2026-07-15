@@ -3,6 +3,7 @@
 window.MEMBER3_DATA = {
   name: 'Muhammad Haikal bin Japri',
   about: {
+    image: 'assets/img/member3/haikal.jpeg',
     role: 'Software Engineer',
     education: 'BSc Computer Graphics and Multimedia, UTM',
     interests: 'UI/UX Design, Software Development, Mobile Application Development',

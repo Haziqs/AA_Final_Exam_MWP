@@ -82,8 +82,8 @@
         #contact-form-container { padding: 1.5rem; }
       }
     </style>
-    <div id="contact-heading" style="position:absolute;top:6%;left:50%;transform:translateX(-50%);text-align:center;z-index:10;color:#edeef4;pointer-events:none;">
-      <h2 style="font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;margin:0;color:#edeef4;">Contact Us</h2>
+    <div id="contact-heading" style="position:absolute;top:6%;left:50%;transform:translateX(-50%);text-align:center;z-index:10;color:var(--text);pointer-events:none;">
+      <h2 style="font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;margin:0;color:var(--text);">Contact Us</h2>
     </div>
     <div id="contact-form-container">
       <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
@@ -108,7 +108,7 @@
         <a href="mailto:group8@utm.my">Email</a>
       </div>
     </div>
-    <div class="hint" style="color:#5a5a6a;">drag to orbit · use arrow keys to nudge</div>
+    <div class="hint" style="color:var(--muted2);">drag to orbit · use arrow keys to nudge</div>
   `;
 
   // 3D Scene
