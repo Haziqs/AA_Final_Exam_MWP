@@ -9,6 +9,7 @@ window.MEMBER3_DATA = {
     github: 'https://github.com/hyekaljap'
   },
   about: {
+    image: 'assets/img/member3/haikal.jpeg',
     role: 'Software Engineer',
     education: 'BSc Computer Graphics and Multimedia, UTM',
     interests: 'UI/UX Design, Software Development, Mobile Application Development',
@@ -30,7 +31,7 @@ window.MEMBER3_DATA = {
             mediaGallery: [
         { type: 'image', src: 'assets/img/member3/Project2/Letter A.png' },
         { type: 'image', src: 'assets/img/member3/Project2/Letter B.png' },
-        { type: 'image', src: 'assets/img/member3/Project2/Ltter C.png' },
+        { type: 'image', src: 'assets/img/member3/Project2/Letter C.png' },
         { type: 'image', src: 'assets/img/member3/Project2/No Gesture.png' },]
       },
     { title: 'PulseForge — Interactive 3D Product Landing Page', description: 'PulseForge is a single-page interactive product landing page for a premium pair of next-generation smart earbuds. The earbuds combine studio-grade Active Noise Cancellation (ANC) with continuous medical-grade biometric health sensing', tech: ['Three.js', 'React Three Fiber','Vite',], mediaSrc: 'https://picsum.photos/400/300?random=9' }
