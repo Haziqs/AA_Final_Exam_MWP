@@ -68,12 +68,30 @@
   floor.receiveShadow = true;
   scene.add(floor);
 
+  function makeSmokeTexture(){
+    const size = 128;
+    const c = document.createElement('canvas');
+    c.width = c.height = size;
+    const ctx = c.getContext('2d');
+    const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+    grad.addColorStop(0, 'rgba(255,255,255,0.9)');
+    grad.addColorStop(0.4, 'rgba(255,255,255,0.35)');
+    grad.addColorStop(1, 'rgba(255,255,255,0)')
+    ctx.fillStyle = grad;
+    ctx.fillRect(0,0,size,size);
+    return new THREE.CanvasTexture(c);
+  }
+
+  const smokeTexture = makeSmokeTexture();
+
   let ringGroup = new THREE.Group();
   scene.add(ringGroup);
   let currentOrbs = [];
-
   function buildRingForMember(memberIndex) {
-    ringGroup.children.forEach(child => { child.geometry.dispose(); child.material.dispose(); });
+     ringGroup.children.forEach(child => {
+      if (child.geometry) child.geometry.dispose();
+      if (child.material) child.material.dispose();
+    });
     scene.remove(ringGroup);
     ringGroup = new THREE.Group();
     currentOrbs = [];
@@ -84,17 +102,64 @@
     skills.forEach((skill, i) => {
       const angle = (i / skills.length) * Math.PI * 2;
       const orbRadius = 0.35 + skill.level * 0.5;
-      const geometry = new THREE.SphereGeometry(orbRadius, 32, 32);
-      const material = new THREE.MeshStandardMaterial({
-        color: colorFor(skill.category), roughness: 0.45, metalness: 0.08,
-        emissive: new THREE.Color(colorFor(skill.category)), emissiveIntensity: 0.12
-      });
+      const geometry = new THREE.IcosahedronGeometry(orbRadius,0);
+      const material = new THREE.MeshPhysicalMaterial({
+        color: colorFor(skill.category),
+        roughness: 0.15,
+        metalness: 0.15,
+        transmission: 0.35,
+        clearcoat: 0.6,
+        reflectivity: 0.6,
+        emissive: new THREE.Color(colorFor(skill.category)),
+        emissiveIntensity: 0.08,
+      })
       const orb = new THREE.Mesh(geometry, material);
       orb.position.set(Math.cos(angle) * radius, 0.4, Math.sin(angle) * radius);
       orb.castShadow = true;
       orb.userData = { skill, baseScale: orb.scale.clone(), floatOffset: i * 1.1, baseY: orb.position.y };
       ringGroup.add(orb);
       currentOrbs.push(orb);
+
+      const particleCount = Math.round(6 + skill.level * 55);
+      const auraGroup = new THREE.Group();
+      const auraParticles = [];
+      const color = new THREE.Color(colorFor(skill.category));
+
+      for (let p = 0; p < particleCount; p++) {
+        const spriteMat = new THREE.SpriteMaterial({
+          map: smokeTexture,
+          color: color,
+          transparent: true,
+          opacity: (0.15 + skill.level * 0.55) * (0.5 + Math.random() * 0.5),
+          blending: THREE.AdditiveBlending,
+          depthWrite: false
+        });
+        const sprite = new THREE.Sprite(spriteMat);
+        const spriteScale = (0.3 + Math.random() * 0.4) * (0.7 + orbRadius);
+        sprite.scale.set(spriteScale, spriteScale, spriteScale);
+
+        const spread = orbRadius * (1.3 + skill.level * 0.4);
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        const r = spread * (0.4 + Math.random() * 0.6);
+        sprite.position.set(
+          r * Math.sin(phi) * Math.cos(theta),
+          r * Math.sin(phi) * Math.sin(theta),
+          r * Math.cos(phi)
+        );
+        sprite.userData = {
+          driftSpeed: 0.15 + Math.random() * 0.3,
+          driftOffset: Math.random() * Math.PI * 2,
+          baseR: r,
+          theta, phi
+        };
+        auraGroup.add(sprite);
+        auraParticles.push(sprite);
+      }
+      auraGroup.position.copy(orb.position);
+      ringGroup.add(auraGroup);
+      orb.userData.aura = auraGroup;
+      orb.userData.auraParticles = auraParticles;
     });
     scene.add(ringGroup);
   }
@@ -221,6 +286,27 @@
     ringGroup.rotation.y += 0.0025;
     currentOrbs.forEach(orb => {
       orb.position.y = orb.userData.baseY + Math.sin(elapsed * 1.4 + orb.userData.floatOffset) * 0.18;
+
+      const aura = orb.userData.aura;
+      if (aura) {
+        aura.position.copy(orb.position);
+        const isActive = (orb === lockedOrb || orb === hoveredOrb);
+        const auraScale = isActive ? 1.15 : 1.0;
+        aura.scale.setScalar(auraScale);
+
+        orb.userData.auraParticles.forEach(sprite => {
+          const u = sprite.userData;
+          const drift = elapsed * u.driftSpeed + u.driftOffset;
+          const r = u.baseR + Math.sin(drift) * 0.05;
+          const theta = u.theta + drift * 0.1;
+          sprite.position.set(
+            r * Math.sin(u.phi) * Math.cos(theta),
+            r * Math.sin(u.phi) * Math.sin(theta) + Math.sin(drift * 1.3) * 0.05,
+            r * Math.cos(u.phi)
+          );
+          sprite.material.rotation += 0.002;
+        });
+      }
     });
     controls.update();
     renderer.render(scene, camera);
