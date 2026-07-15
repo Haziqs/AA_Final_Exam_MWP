@@ -26,8 +26,14 @@ window.MEMBER3_DATA = {
     { name: 'Video Editing', category: 'Media', level: 0.65 }
   ],
   projects: [
-    { title: 'CampusCloset', description: 'A mobile application for Cloth Rental Services especially among the UTM students.', tech: ['Dart', 'Java', 'Google Cloud'], mediaSrc: 'https://picsum.photos/400/300?random=7' },
-    { title: 'Robotic Arm Simulator', description: 'A 3D simulation environment built in MATLAB/Simulink to model and control a 5-DOF robotic arm, used as a teaching aid for mechatronics students.', tech: ['MATLAB', 'Simulink'], mediaSrc: 'https://picsum.photos/400/300?random=8' },
-    { title: 'UTM Event Vibe Promotional Video', description: 'A high-energy promotional video produced for UTM\'s annual innovation showcase, featuring motion graphics, on-site interviews, and atmospheric sound design.', tech: ['Premiere Pro', 'After Effects'], mediaSrc: 'https://picsum.photos/400/300?random=9' }
+    { title: 'CampusCloset', description: 'A mobile application for Cloth Rental Services especially among the UTM students.', tech: ['Dart', 'Java', 'Google Cloud','Flutter','Figma'], mediaSrc: 'https://picsum.photos/400/300?random=7' },
+    { title: 'AR Sign Language Interpreter', description: 'A real-time Augmented Reality system that detects and translates Bahasa Isyarat Malaysia (BIM) gestures into text overlays, displayed directly through XREAL Air 2 Ultra AR glasses — bridging communication between the deaf/hard-of-hearing community and the hearing world.', tech: ['Python', 'XREAL Glass','CNN','Unity','C#','TensorFlow'], 
+            mediaGallery: [
+        { type: 'image', src: 'assets/img/member3/Project2/Letter A.png' },
+        { type: 'image', src: 'assets/img/member3/Project2/Letter B.png' },
+        { type: 'image', src: 'assets/img/member3/Project2/Ltter C.png' },
+        { type: 'image', src: 'assets/img/member3/Project2/No Gesture.png' },]
+      },
+    { title: 'PulseForge — Interactive 3D Product Landing Page', description: 'PulseForge is a single-page interactive product landing page for a premium pair of next-generation smart earbuds. The earbuds combine studio-grade Active Noise Cancellation (ANC) with continuous medical-grade biometric health sensing', tech: ['Three.js', 'React Three Fiber','Vite',], mediaSrc: 'https://picsum.photos/400/300?random=9' }
   ]
 };

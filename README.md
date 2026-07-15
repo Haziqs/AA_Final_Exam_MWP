@@ -8,6 +8,14 @@
 - MUHAMMAD HAIKAL BIN JAPRI         (A23CS0131)
 - HARRESH A/L UTHAYAKUMAR           (A23CS0226)
 
-# Submission
-- Full AA Submission
+# Submissions
+<!-- Group submission (REPRESENTATIVE SUBMIT) -->
+   - Complete source code (ZIP file)
+   - Technical report
+        - Live URL link
+        - Video link
+
+<!-- Individual submission (ALL MEMBER SUBMIT) -->
+   - Individual self-reflection
+
 - 15 July 2026, 5.00 PM
