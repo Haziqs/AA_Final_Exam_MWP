@@ -1,6 +1,4 @@
 /* FILE OWNER: Member 3 — others do not edit */
-const smokeTexture = makeSmokeTexture();
-
 (function initSkillsScene() {
   const sectionEl = document.getElementById('skills');
 
@@ -21,11 +19,8 @@ const smokeTexture = makeSmokeTexture();
   const scene = new THREE.Scene();
   scene.background = window.getBackgroundTexture();
   window.addEventListener('themeChanged', function(e) {
-    const isDark = document.body.classList.contains('dark-theme');
     scene.background = window.getBackgroundTexture();
     scene.background.needsUpdate = true;
-    floor.material.color.setHex(isDark ? 0x0a0810 : 0xe9e2d8);
-    buildRingForMember(activeMemberIndex); // Add this line
   });
   scene.fog = new THREE.Fog(0x0d0b12, 8, 20);
 
@@ -86,6 +81,8 @@ const smokeTexture = makeSmokeTexture();
     ctx.fillRect(0,0,size,size);
     return new THREE.CanvasTexture(c);
   }
+
+  const smokeTexture = makeSmokeTexture();
 
   let ringGroup = new THREE.Group();
   scene.add(ringGroup);
