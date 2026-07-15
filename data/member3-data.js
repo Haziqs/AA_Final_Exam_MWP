@@ -1,18 +1,26 @@
 /* FILE OWNER: Member 3 — others do not edit */
-// EDIT THIS
+
 window.MEMBER3_DATA = {
-  name: 'Member 3',
-  about: { role: '', education: '', interests: '', achievements: [] },
+  name: 'Muhammad Haikal bin Japri',
+  about: {
+    role: 'Software Engineer',
+    education: 'BSc Computer Graphics and Multimedia, UTM',
+    interests: 'UI/UX Design, Software Development, Mobile Application Development',
+    achievements: [
+      'WRO Champion in 2022',
+      'Club President'
+    ]
+  },
   skills: [
-    { name: 'Java', category: 'Programming', level: 0.8 },
-    { name: 'MATLAB', category: 'Engineering', level: 0.7 },
-    { name: 'Project Management', category: 'Soft Skill', level: 0.65 },
-    { name: 'C++', category: 'Programming', level: 0.6 },
-    { name: 'Video Editing', category: 'Media', level: 0.55 }
+    { name: 'Java', category: 'Programming', level: 0.88 },
+    { name: 'MATLAB', category: 'Engineering', level: 0.79 },
+    { name: 'Project Management', category: 'Soft Skill', level: 0.80 },
+    { name: 'C++', category: 'Programming', level: 0.80 },
+    { name: 'Video Editing', category: 'Media', level: 0.65 }
   ],
   projects: [
-    { title: 'Project Title A', description: 'Brief description of what this project does and the problem it solves.', tech: ['Tech 1', 'Tech 2'], mediaSrc: '' },
-    { title: 'Project Title B', description: 'Brief description of what this project does and the problem it solves.', tech: ['Tech 1', 'Tech 2'], mediaSrc: '' },
-    { title: 'Project Title C', description: 'Brief description of what this project does and the problem it solves.', tech: ['Tech 1', 'Tech 2'], mediaSrc: '' }
+    { title: 'CampusCloset', description: 'A mobile application for Cloth Rental Services especially among the UTM students.', tech: ['Dart', 'Java', 'Google Cloud'], mediaSrc: 'https://picsum.photos/400/300?random=7' },
+    { title: 'Robotic Arm Simulator', description: 'A 3D simulation environment built in MATLAB/Simulink to model and control a 5-DOF robotic arm, used as a teaching aid for mechatronics students.', tech: ['MATLAB', 'Simulink'], mediaSrc: 'https://picsum.photos/400/300?random=8' },
+    { title: 'UTM Event Vibe Promotional Video', description: 'A high-energy promotional video produced for UTM\'s annual innovation showcase, featuring motion graphics, on-site interviews, and atmospheric sound design.', tech: ['Premiere Pro', 'After Effects'], mediaSrc: 'https://picsum.photos/400/300?random=9' }
   ]
 };

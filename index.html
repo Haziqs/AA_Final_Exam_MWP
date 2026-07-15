@@ -3,24 +3,48 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Group Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Group 8 — 3D Portfolio</title>
 <link rel="stylesheet" href="css/main.css" />
 </head>
-<body>
+<body class="light-theme">
+
+<!-- ===== SCROLL PROGRESS BAR ===== -->
+<div id="progress-bar"></div>
+
+<!-- ===== FIXED NAVIGATION ===== -->
+<nav style="position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:rgba(255,255,255,0.75);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,0.04);">
+  <div style="font-weight:700;font-size:1.2rem;letter-spacing:0.08em;color:#4a4038;">
+    <span style="background:linear-gradient(135deg,#cdb8db,#e8b4b8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Group 8</span>
+  </div>
+  <div style="display:flex;gap:20px;font-size:0.85rem;font-weight:500;align-items:center;">
+    <a href="#landing" style="text-decoration:none;color:#6b5d4f;transition:color 0.2s;">Home</a>
+    <a href="#about" style="text-decoration:none;color:#6b5d4f;transition:color 0.2s;">About</a>
+    <a href="#skills" style="text-decoration:none;color:#6b5d4f;transition:color 0.2s;">Skills</a>
+    <a href="#gallery" style="text-decoration:none;color:#6b5d4f;transition:color 0.2s;">Projects</a>
+    <a href="#contact" style="text-decoration:none;color:#6b5d4f;transition:color 0.2s;">Contact</a>
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" style="background:transparent;border:1px solid #d8cabb;border-radius:999px;padding:4px 10px;cursor:pointer;font-size:0.75rem;color:#6b5d4f;transition:background 0.2s;">🌙</button>
+  </div>
+  <a href="#contact" style="background:#cdb8db;padding:6px 18px;border-radius:999px;text-decoration:none;color:#3d3630;font-weight:600;font-size:0.8rem;">Get in Touch</a>
+</nav>
 
 <!-- ============================= LANDING SECTION ============================= -->
 <section id="landing">
   <div id="hero-text">
-    <h1>Group Name — Portfolio Title</h1>
-    <p>Professional tagline goes here</p>
+    <h1>
+      Group 8 — <span>3D Portfolio</span>
+    </h1>
+    <p class="tagline">Innovating the future with code, creativity & collaboration</p>
+    <p class="subtitle">We are four passionate developers from UTM building immersive web experiences with Three.js.</p>
   </div>
   <div class="hint">drag to orbit · scroll to zoom · click a shape · arrow keys to nudge camera</div>
 </section>
 
-<!-- ============================= ABOUT US (placeholder — not this task) ============================= -->
+<!-- ============================= ABOUT US ============================= -->
 <section id="about" class="placeholder-section">
   <h2>About Us</h2>
-  <p>TODO: member profiles, education, career interests, achievements</p>
+  <p>TODO: replaced by about.js</p>
 </section>
 
 <!-- ============================= SKILLS SHOWCASE ============================= -->
@@ -52,14 +76,46 @@
   <div class="hint">drag to orbit · click a card for details · arrow keys to rotate the carousel</div>
 </section>
 
-<!-- ============================= CONTACT (placeholder — not this task) ============================= -->
+<!-- ============================= CONTACT ============================= -->
 <section id="contact" class="placeholder-section">
   <h2>Contact</h2>
-  <p>TODO: contact info, social links, contact form</p>
+  <p>TODO: replaced by contact.js</p>
 </section>
 
+<!-- ============================= FOOTER ============================= -->
+<footer id="site-footer">
+  © 2026 Group 8 — UTM · Built with Three.js & passion
+</footer>
+
+<!-- ===== SCRIPTS ===== -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+<!-- Scroll Progress -->
+<script>
+  window.addEventListener('scroll', () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    document.getElementById('progress-bar').style.width = scrolled + '%';
+  });
+</script>
+
+<!-- Theme Toggle -->
+<script>
+  // Set initial icon based on body class
+  document.addEventListener('DOMContentLoaded', function() {
+    const isDark = document.body.classList.contains('dark-theme');
+    document.getElementById('theme-toggle').textContent = isDark ? '☀️' : '🌙';
+  });
+
+  // Handle toggle clicks
+  document.getElementById('theme-toggle').addEventListener('click', function() {
+    const theme = window.toggleTheme();
+    this.textContent = theme === 'light' ? '🌙' : '☀️';
+    window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
+  });
+</script>
 
 <!-- Data -->
 <script src="data/member1-data.js"></script>
