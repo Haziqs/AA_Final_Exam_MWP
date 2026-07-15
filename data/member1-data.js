@@ -50,9 +50,9 @@ window.MEMBER1_DATA = {
       description: 'Developed a machine learning application that applies the K-Means clustering algorithm to analyze and segment social media engagement data. Built an interactive dashboard for data preprocessing, cluster visualization, performance evaluation, and exporting analysis results to support data-driven insights.',
       tech: ['Python', 'Scikit-learn', 'Pandas', 'Flask'],
       mediaGallery: [
-        { type: 'image', src: 'assets/img/member1/project 3rd/1st .jpeg' },
-        { type: 'video', src: 'assets/img/member1/project 3rd/Kmean Clustering video.mp4' },
-        { type: 'image', src: 'assets/img/member1/project 3rd/2nd.jpeg' }
+        { type: 'image', src: 'assets/img/member1/Project 3rd/1st .jpeg' },
+        { type: 'video', src: 'assets/img/member1/Project 3rd/Kmean Clustering video.mp4' },
+        { type: 'image', src: 'assets/img/member1/Project 3rd/2nd.jpeg' }
       ]
     }
   ]
