@@ -9,11 +9,12 @@
     window.MEMBER4_DATA
   ];
 
-  function createCardTexture(title, tech) {
+  function createCardTexture(project) {
     const w = 512, h = 320;
     const canvas = document.createElement('canvas');
     canvas.width = w; canvas.height = h;
     const ctx = canvas.getContext('2d');
+    const texture = new THREE.CanvasTexture(canvas);
 
     const isDark = document.body.classList.contains('dark-theme');
     const bgColor = isDark ? '#1a1625' : '#faf5ee';
@@ -21,20 +22,77 @@
     const mutedColor = isDark ? '#8a8a9c' : '#8a7d70';
     const accentColor = isDark ? '#5ee7ff' : '#cdb8db';
 
+    // Draw background
     ctx.fillStyle = bgColor;
     ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = accentColor;
     ctx.fillRect(0, 0, w, 4);
 
+    // Title
     ctx.fillStyle = textColor;
     ctx.font = 'bold 34px Segoe UI, sans-serif';
-    wrapText(ctx, title, 28, 80, w - 56, 40);
+    wrapText(ctx, project.title, 28, 55, w - 56, 40);
 
+    // Tech Stack
     ctx.fillStyle = mutedColor;
     ctx.font = '20px Segoe UI, sans-serif';
-    ctx.fillText(tech.slice(0, 3).join('  ·  '), 28, h - 36);
+    ctx.fillText(project.tech.slice(0, 3).join('  ·  '), 28, h - 25);
 
-    // Subtle glow
+    // Find the first image URL
+    let coverImgUrl = null;
+    if (project.mediaGallery && project.mediaGallery.length > 0) {
+      const firstImg = project.mediaGallery.find(m => m.type === 'image');
+      if (firstImg) coverImgUrl = firstImg.src;
+    } else if (project.imageSrc) {
+      coverImgUrl = project.imageSrc;
+    } else if (project.mediaSrc) {
+      coverImgUrl = project.mediaSrc;
+    }
+
+    if (coverImgUrl) {
+      const img = new Image();
+      img.crossOrigin = "Anonymous";
+      img.onload = () => {
+        // Draw a thumbnail box in the middle (under the title)
+        const boxX = 28;
+        const boxY = 110;
+        const boxW = w - 56;
+        const boxH = 140;
+
+        const scale = Math.max(boxW / img.width, boxH / img.height);
+        const nw = img.width * scale;
+        const nh = img.height * scale;
+        const ox = boxX + (boxW - nw) / 2;
+        const oy = boxY + (boxH - nh) / 2;
+        
+        ctx.save();
+        ctx.beginPath();
+        if (ctx.roundRect) {
+          ctx.roundRect(boxX, boxY, boxW, boxH, 8);
+        } else {
+          ctx.rect(boxX, boxY, boxW, boxH);
+        }
+        ctx.clip();
+        ctx.drawImage(img, ox, oy, nw, nh);
+        ctx.restore();
+
+        // Subtle border for the thumbnail
+        ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        if (ctx.roundRect) {
+          ctx.roundRect(boxX, boxY, boxW, boxH, 8);
+        } else {
+          ctx.rect(boxX, boxY, boxW, boxH);
+        }
+        ctx.stroke();
+
+        texture.needsUpdate = true;
+      };
+      img.src = coverImgUrl;
+    }
+
+    // Subtle glow over everything
     const gradient = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w/2);
     const glowColor = isDark ? 'rgba(94, 231, 255, 0.02)' : 'rgba(205, 184, 219, 0.03)';
     gradient.addColorStop(0, glowColor);
@@ -42,7 +100,7 @@
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, w, h);
 
-    return new THREE.CanvasTexture(canvas);
+    return texture;
   }
 
   const scene = new THREE.Scene();
@@ -121,7 +179,7 @@
 
     projects.forEach((project, i) => {
       const angle = (i / projects.length) * Math.PI * 2;
-      const texture = createCardTexture(project.title, project.tech);
+      const texture = createCardTexture(project);
       const frontMat = new THREE.MeshStandardMaterial({ map: texture, roughness: 0.4, metalness: 0.2 });
 
       const geometry = new THREE.BoxGeometry(2.1, 1.35, 0.12);
@@ -144,7 +202,7 @@
   // Update UI styles for dark theme
   const style = document.createElement('style');
   style.textContent = `
-    #gallery-heading h2 { color: #edeef4; }
+    #gallery-heading h2 { color: var(--text); }
     #gallery-member-tabs .member-tab { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: #8a8a9c; }
     #gallery-member-tabs .member-tab:hover { background: rgba(255,255,255,0.15); }
     #gallery-member-tabs .member-tab.active { background: #5ee7ff; border-color: #5ee7ff; color: #0a0810; }
@@ -155,7 +213,7 @@
     #gallery-detail-close { color: #8a8a9c; }
     #gallery-detail-close:hover { color: #edeef4; }
     #gallery-project-media { background: rgba(255,255,255,0.02); color: #5a5a6a; }
-    .hint { color: #5a5a6a; }
+    .hint { color: var(--muted2); }
   `;
   document.head.appendChild(style);
 
@@ -198,10 +256,83 @@
       chip.textContent = t;
       techEl.appendChild(chip);
     });
-    if (project.mediaSrc) {
-      mediaEl.innerHTML = '<img src="' + project.mediaSrc + '" alt="' + project.title + '" style="width:100%;height:100%;object-fit:cover;" />';
+    mediaEl.innerHTML = '';
+    mediaEl.style.display = 'block';
+    mediaEl.style.position = 'relative';
+
+    const mediaList = [];
+    
+    // Check if new mediaGallery array exists
+    if (project.mediaGallery && project.mediaGallery.length > 0) {
+      project.mediaGallery.forEach(item => {
+        if (item.type === 'image') {
+          mediaList.push('<img src="' + item.src + '" alt="' + project.title + '" style="width:100%; max-height:400px; object-fit:contain; border-radius:6px; display:block;" />');
+        } else if (item.type === 'video') {
+          mediaList.push('<video src="' + item.src + '" controls style="width:100%; max-height:400px; object-fit:contain; border-radius:6px; background:#000; display:block;" preload="metadata"></video>');
+        }
+      });
     } else {
-      mediaEl.innerHTML = 'Add an image or video path in mediaSrc';
+      // Legacy support for imageSrc, videoSrc, mediaSrc
+      if (project.imageSrc) {
+        mediaList.push('<img src="' + project.imageSrc + '" alt="' + project.title + '" style="width:100%; max-height:400px; object-fit:contain; border-radius:6px; display:block;" />');
+      }
+      if (project.videoSrc) {
+        mediaList.push('<video src="' + project.videoSrc + '" controls style="width:100%; max-height:400px; object-fit:contain; border-radius:6px; background:#000; display:block;" preload="metadata"></video>');
+      }
+      if (project.mediaSrc && !project.videoSrc && !project.imageSrc) {
+        mediaList.push('<img src="' + project.mediaSrc + '" alt="' + project.title + '" style="width:100%; max-height:400px; object-fit:contain; border-radius:6px; display:block;" />');
+      }
+    }
+
+    if (mediaList.length === 0) {
+      mediaEl.innerHTML = '<div style="padding:10px;">Add an image or video path</div>';
+    } else if (mediaList.length === 1) {
+      mediaEl.innerHTML = mediaList[0];
+    } else {
+      // Create a slider
+      mediaEl.innerHTML = `
+        <div id="media-slider-container" style="position:relative; width:100%;">
+          <div id="media-slider-content" style="display:flex; justify-content:center; align-items:center; min-height:400px; background:rgba(0,0,0,0.2); border-radius:6px;">
+            ${mediaList[0]}
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:10px; align-items:center;">
+            <button id="slider-prev" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:white; padding:6px 12px; border-radius:4px; cursor:pointer; font-size:12px; transition:0.2s;">&laquo; Prev</button>
+            <span id="slider-indicator" style="color:#8a8a9c; font-size:12px;">1 / ${mediaList.length}</span>
+            <button id="slider-next" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:white; padding:6px 12px; border-radius:4px; cursor:pointer; font-size:12px; transition:0.2s;">Next &raquo;</button>
+          </div>
+        </div>
+      `;
+      
+      let currentIndex = 0;
+      const contentEl = document.getElementById('media-slider-content');
+      const prevBtn = document.getElementById('slider-prev');
+      const nextBtn = document.getElementById('slider-next');
+      const indicator = document.getElementById('slider-indicator');
+
+      const updateSlider = () => {
+        contentEl.innerHTML = mediaList[currentIndex];
+        indicator.textContent = (currentIndex + 1) + ' / ' + mediaList.length;
+        prevBtn.style.opacity = currentIndex === 0 ? '0.3' : '1';
+        nextBtn.style.opacity = currentIndex === mediaList.length - 1 ? '0.3' : '1';
+        prevBtn.style.cursor = currentIndex === 0 ? 'default' : 'pointer';
+        nextBtn.style.cursor = currentIndex === mediaList.length - 1 ? 'default' : 'pointer';
+      };
+      
+      updateSlider();
+
+      prevBtn.onclick = () => {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateSlider();
+        }
+      };
+
+      nextBtn.onclick = () => {
+        if (currentIndex < mediaList.length - 1) {
+          currentIndex++;
+          updateSlider();
+        }
+      };
     }
     detailPanel.classList.add('visible');
   }
