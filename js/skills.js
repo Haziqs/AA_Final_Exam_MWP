@@ -168,7 +168,7 @@
   // Update UI styles for dark theme
   const style = document.createElement('style');
   style.textContent = `
-    #section-heading h2 { color: #edeef4; }
+    #section-heading h2 { color: var(--text); }
     .member-tab { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: #8a8a9c; }
     .member-tab:hover { background: rgba(255,255,255,0.15); }
     .member-tab.active { background: #5ee7ff; border-color: #5ee7ff; color: #0a0810; }
@@ -178,7 +178,7 @@
     #skill-bar-track { background: rgba(255,255,255,0.05); }
     #skill-bar-fill { background: linear-gradient(90deg, #5ee7ff, #b57bff); }
     #skill-level-text { color: #8a8a9c; }
-    .hint { color: #5a5a6a; }
+    .hint { color: var(--muted2); }
   `;
   document.head.appendChild(style);
 

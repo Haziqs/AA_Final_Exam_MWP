@@ -13,26 +13,30 @@
     <style>
       #about-cards {
         display: flex;
-        gap: 1.2rem;
-        flex-wrap: wrap;
+        gap: 2rem;
+        flex-wrap: nowrap;
         justify-content: center;
-        max-width: 90%;
+        width: 100%;
+        max-width: 1200px;
         pointer-events: none;
         z-index: 10;
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -45%);
+        transform: translate(-50%, -40%);
       }
       .about-card {
         background: rgba(20, 18, 30, 0.6);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         border-radius: 16px;
-        padding: 1.2rem 1.2rem;
-        min-width: 170px;
-        max-width: 220px;
-        flex: 1 1 auto;
+        padding: 1.5rem;
+        width: 260px;
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
         pointer-events: auto;
         box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         border: 1px solid rgba(255,255,255,0.06);
@@ -47,27 +51,41 @@
       .about-card .role { font-size: 0.75rem; color: #5ee7ff; margin: 0.2rem 0 0.4rem; }
       .about-card .detail { font-size: 0.7rem; color: #8a8a9c; margin-top: 0.15rem; line-height: 1.4; }
       .about-card .detail strong { font-weight: 600; color: #b57bff; }
-      @media (max-width: 600px) {
-        #about-cards { top: 55%; gap: 0.8rem; }
-        .about-card { min-width: 140px; padding: 0.9rem; }
+      .about-card .profile-pic {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        border-radius: 8px;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+      }
+      @media (max-width: 900px) {
+        #about-cards { top: 55%; gap: 1rem; max-width: 95%; overflow-x: auto; padding-bottom: 10px; justify-content: flex-start; }
+        .about-card { width: 220px; padding: 1.2rem; }
       }
     </style>
-    <div id="about-heading" style="position:absolute;top:6%;left:50%;transform:translateX(-50%);text-align:center;z-index:10;color:#edeef4;pointer-events:none;">
-      <h2 style="font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;margin:0;color:#edeef4;">About Us</h2>
-      <p style="color:#8a8a9c;font-size:1rem;">Meet the team behind the portfolio</p>
+    <div id="about-heading" style="position:absolute;top:6%;left:50%;transform:translateX(-50%);text-align:center;z-index:10;color:var(--text);pointer-events:none;">
+      <h2 style="font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;margin:0;color:var(--text);">About Us</h2>
+      <p style="color:var(--muted);font-size:1rem;">Meet the team behind the portfolio</p>
     </div>
     <div id="about-cards">
       ${members.map((m) => `
         <div class="about-card">
+          <img class="profile-pic" src="${m.about.image || 'https://via.placeholder.com/150/cdb8db/4a4038?text=Profile'}" alt="${m.name}" />
           <div class="name">${m.name}</div>
           <div class="role">${m.about.role || 'Team Member'}</div>
           <div class="detail"><strong>Education:</strong> ${m.about.education || 'N/A'}</div>
           <div class="detail"><strong>Interests:</strong> ${m.about.interests || 'N/A'}</div>
-          <div class="detail"><strong>Achievements:</strong> ${(m.about.achievements && m.about.achievements.length) ? m.about.achievements.join(', ') : 'None listed'}</div>
+          <div class="detail" style="text-align: left; width: 100%; margin-top: 0.5rem;">
+            <strong>Achievements:</strong>
+            <ul style="margin: 0.3rem 0 0 0; padding-left: 1.2rem;">
+              ${(m.about.achievements && m.about.achievements.length) ? m.about.achievements.map(a => `<li style="margin-bottom: 0.25rem;">${a}</li>`).join('') : '<li>None listed</li>'}
+            </ul>
+          </div>
         </div>
       `).join('')}
     </div>
-    <div class="hint" style="color:#8a8a9c;">drag to orbit · hover a shape to highlight</div>
+    <div class="hint" style="color:var(--muted2);">drag to orbit · hover a shape to highlight</div>
   `;
 
   // ---------- 3D Scene ----------

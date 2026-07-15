@@ -2,13 +2,15 @@
 
 window.MEMBER1_DATA = {
   name: 'Haziq bin Shahmen',
-  about: { 
-    role: 'Frontend Developer', 
-    education: 'BSc Computer Graphics and Multimedia, UTM', 
-    interests: 'Web3, Image Processing, UI/UX', 
+  about: {
+    image: 'assets/img/member1/haziq passport.png',
+    role: 'Frontend Developer',
+    education: 'BSc Computer Graphics and Multimedia, UTM',
+    interests: 'Web3, Image Processing, UI/UX',
     achievements: [
-      "Dean's List 2023",
-      "Hackathon 2025 Winner"
+      "First Runner Up – MYVERSE Malaysia Creative Tech Competition 2026 (organized by Techverse Production, supported by MDEC)",
+      "Gold Award – INNOVEX 2026 (Young Science & Technology Category, organized by Innovex Secretariat)",
+      "Silver Medal – i-GEN Innovation Competition (organized by MARA Corporation & Kolej Poly-Tech MARA)"
     ]
   },
   skills: [
@@ -19,8 +21,39 @@ window.MEMBER1_DATA = {
     { name: 'Node.js', category: 'Backend', level: 0.62 }
   ],
   projects: [
-    { title: 'Butterfly vs Owl Classifier', description: 'A convolutional neural network (CNN) image classification model built with TensorFlow and Keras, trained on a dataset of butterfly and owl images. The model achieves 92% accuracy and was validated using WEKA\'s machine learning evaluation suite. This project involved extensive data augmentation, transfer learning with MobileNetV2, and hyperparameter tuning to optimise performance across two distinct frameworks.', tech: ['TensorFlow', 'Keras', 'WEKA'], mediaSrc: 'https://picsum.photos/400/300?random=1' },
-    { title: 'PulseForge Product Page', description: 'An immersive, interactive 3D product landing page built with React Three Fiber and Vite, designed to showcase a conceptual wireless earbud product. Features include auto-rotating 3D models, scroll-driven animations, reflective surfaces, and a glass-morphism UI that adapts to user interactions. This project demonstrates advanced 3D web development techniques for e-commerce product presentation.', tech: ['React Three Fiber', 'Vite'], mediaSrc: 'https://picsum.photos/400/300?random=2' },
-    { title: 'Smart Presentation Evaluator', description: 'A computer vision and AI system that automatically evaluates academic presentations. Uses OpenCV for facial expression analysis, MediaPipe for gesture tracking, Whisper for speech-to-text transcription, and SBERT for semantic coherence scoring. The system provides real-time feedback on presentation delivery, including eye contact, vocal clarity, and content structure.', tech: ['OpenCV', 'MediaPipe', 'Whisper', 'SBERT'], mediaSrc: 'https://picsum.photos/400/300?random=3' }
+    {
+      title: 'Mobivia',
+      description: 'A Low-Cost AI-Based Tracking System for Early Mobility and Fall-Risk Screening. Mobivia is a low-cost, AI-powered tracking system designed for early mobility and fall-risk screening. Developed by my team from Universiti Teknologi Malaysia (UTM), it uses standard cameras and computer vision technology to analyze a user\'s body posture, movement, and biomechanics without the need for expensive clinical hardware or wearables.',
+      tech: ['Tauri', 'Vite', 'TypeScript', 'Computer Vision'],
+      mediaGallery: [
+        { type: 'image', src: 'assets/img/member1/Project 1st/mobivia.jpeg' },
+        { type: 'video', src: 'assets/img/member1/Project 1st/Vetro_Mobivia Video Showcase.mp4' },
+        { type: 'image', src: 'assets/img/member1/Project 1st/WhatsApp Image 2026-07-15 at 2.01.04 PM.jpeg' },
+        { type: 'image', src: 'assets/img/member1/Project 1st/WhatsApp Image 2026-07-15 at 2.01.34 PM.jpeg' },
+        { type: 'image', src: 'assets/img/member1/Project 1st/WhatsApp Image 2026-07-15 at 2.01.48 PM.jpeg' }
+      ]
+    },
+    {
+      title: 'Interactive Birthday Celebration Website',
+      description: 'Created a responsive birthday-themed website featuring animated UI transitions, multimedia integration, interactive elements, and dynamic content. Leveraged HTML, CSS, and JavaScript to deliver an engaging and seamless user experience across devices.',
+      tech: ['HTML5', 'CSS3', 'JavaScript', 'Canvas'],
+      mediaGallery: [
+        { type: 'image', src: 'assets/img/member1/Project 2nd/1st .jpeg' },
+        { type: 'video', src: 'assets/img/member1/Project 2nd/birthday website.mp4' },
+        { type: 'image', src: 'assets/img/member1/Project 2nd/2nd after video.jpeg' },
+        { type: 'image', src: 'assets/img/member1/Project 2nd/3rd.jpeg' },
+        { type: 'image', src: 'assets/img/member1/Project 2nd/4th.jpeg' }
+      ]
+    },
+    {
+      title: 'Social Media Engagement Clustering System',
+      description: 'Developed a machine learning application that applies the K-Means clustering algorithm to analyze and segment social media engagement data. Built an interactive dashboard for data preprocessing, cluster visualization, performance evaluation, and exporting analysis results to support data-driven insights.',
+      tech: ['Python', 'Scikit-learn', 'Pandas', 'Flask'],
+      mediaGallery: [
+        { type: 'image', src: 'assets/img/member1/project 3rd/1st .jpeg' },
+        { type: 'video', src: 'assets/img/member1/project 3rd/Kmean Clustering video.mp4' },
+        { type: 'image', src: 'assets/img/member1/project 3rd/2nd.jpeg' }
+      ]
+    }
   ]
 };

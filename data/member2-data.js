@@ -3,6 +3,7 @@
 window.MEMBER2_DATA = {
   name: 'Faris Iskandar bin Zamani',
   about: {
+    image: 'assets/img/member2/faris.jpeg',
     role: 'Data & UX Analyst',
     education: 'BSc Computer Graphics and Multimedia, UTM',
     interests: 'Data Storytelling, Human-Computer Interaction, Product Strategy',

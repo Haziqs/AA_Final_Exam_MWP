@@ -3,6 +3,7 @@
 window.MEMBER4_DATA = {
   name: 'Harresh a/l Uthayakumar',
   about: { 
+    image: 'assets/img/member4/haresh.jpeg',
     role: 'AI & Data Scientist', 
     education: 'BSc Computer Graphics and Multimedia, UTM', 
     interests: 'Natural Language Processing, Generative AI, Big Data Infrastructure', 
