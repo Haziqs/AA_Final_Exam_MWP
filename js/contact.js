@@ -4,30 +4,106 @@
 
   sectionEl.innerHTML = `
     <style>
-      #contact-form-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+      #contact-ui-wrapper {
+        position: relative;
+        padding-top: 15vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3rem;
         z-index: 10;
+        pointer-events: none;
+        padding-bottom: 6rem;
+      }
+      
+      #contact-cards-container {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        max-width: 1200px;
+        pointer-events: none;
+      }
+      .contact-card {
+        background: var(--card-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-radius: 16px;
+        padding: 1.5rem;
+        width: 220px;
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
         pointer-events: auto;
-        width: min(400px, 82%);
-        background: rgba(20, 18, 30, 0.7);
+        box-shadow: 0 8px 32px var(--shadow);
+        border: 1px solid var(--border-card);
+        transition: transform 0.25s ease, border-color 0.25s ease;
+      }
+      .contact-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--primary);
+      }
+      .contact-card img.profile-pic {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        border-radius: 8px;
+        object-fit: cover;
+        margin-bottom: 1rem;
+        border: 2px solid var(--border-card);
+      }
+      .contact-card .name { font-weight: 600; font-size: 1.05rem; color: var(--text); margin-bottom: 0.5rem; }
+      .contact-card .contact-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        width: 100%;
+      }
+      .contact-card .contact-links a,
+      .contact-card .contact-links span.non-link {
+        background: var(--bg2);
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.8rem;
+        padding: 0.4rem;
+        border-radius: 6px;
+        transition: background 0.2s, color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 0.5rem;
+        word-break: break-word;
+      }
+      .contact-card .contact-links a:hover {
+        background: var(--border);
+        color: var(--primary);
+      }
+
+      /* Existing contact form styles */
+      #contact-form-container {
+        pointer-events: auto;
+        width: min(400px, 90%);
+        background: var(--card-bg);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         border-radius: 24px;
         padding: 2rem 1.8rem;
-        border: 1px solid rgba(255,255,255,0.06);
-        box-shadow: 0 8px 48px rgba(0,0,0,0.4);
+        border: 1px solid var(--border-card);
+        box-shadow: 0 8px 48px var(--shadow);
       }
-      #contact-form-container label { display: block; font-weight: 500; color: #8a8a9c; font-size: 0.85rem; margin-bottom: 0.2rem; }
+      #contact-form-container h3 { margin-top:0; text-align:center; color: var(--text); font-size: 1.2rem; margin-bottom: 1rem; }
+      #contact-form-container label { display: block; font-weight: 500; color: var(--muted); font-size: 0.85rem; margin-bottom: 0.2rem; }
       #contact-form-container input, #contact-form-container textarea {
         width: 100%;
         padding: 0.6rem 0.8rem;
         border-radius: 10px;
-        border: 1px solid rgba(255,255,255,0.05);
-        background: rgba(0,0,0,0.3);
-        color: #edeef4;
+        border: 1px solid var(--input-border);
+        background: var(--input-bg);
+        color: var(--text);
         font-size: 0.9rem;
         font-family: inherit;
         transition: border-color 0.2s;
@@ -35,39 +111,23 @@
       }
       #contact-form-container input:focus, #contact-form-container textarea:focus {
         outline: none;
-        border-color: #5ee7ff;
-        background: rgba(0,0,0,0.4);
+        border-color: var(--input-focus);
+        background: var(--input-bg);
       }
       #contact-form-container .form-group { margin-bottom: 1rem; }
       #contact-form-container .submit-btn {
-        background: linear-gradient(135deg, #5ee7ff, #b57bff);
+        background: var(--gradient);
         border: none;
         padding: 0.7rem 1.5rem;
         border-radius: 999px;
         font-weight: 600;
-        color: #0a0810;
+        color: var(--tab-active-text);
         cursor: pointer;
         width: 100%;
         font-size: 1rem;
         transition: transform 0.15s, box-shadow 0.2s;
       }
-      #contact-form-container .submit-btn:hover { transform: scale(1.01); box-shadow: 0 0 30px rgba(94, 231, 255, 0.15); }
-      #contact-form-container .social-links {
-        margin-top: 1.2rem;
-        display: flex;
-        gap: 1.2rem;
-        justify-content: center;
-      }
-      #contact-form-container .social-links a {
-        color: #8a8a9c;
-        text-decoration: none;
-        font-size: 0.85rem;
-        font-weight: 500;
-        padding: 0.2rem 0.6rem;
-        border-radius: 999px;
-        transition: color 0.2s, background 0.2s;
-      }
-      #contact-form-container .social-links a:hover { color: #edeef4; background: rgba(255,255,255,0.05); }
+      #contact-form-container .submit-btn:hover { transform: scale(1.01); box-shadow: 0 0 30px var(--shadow-hover); }
       #form-feedback {
         margin-top: 0.8rem;
         padding: 0.6rem;
@@ -82,33 +142,47 @@
         #contact-form-container { padding: 1.5rem; }
       }
     </style>
-    <div id="contact-heading" style="position:absolute;top:6%;left:50%;transform:translateX(-50%);text-align:center;z-index:10;color:var(--text);pointer-events:none;">
-      <h2 style="font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;margin:0;color:var(--text);">Contact Us</h2>
-    </div>
-    <div id="contact-form-container">
-      <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <div class="form-group">
-          <label>Your Name</label>
-          <input type="text" name="name" required>
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" name="email" required>
-        </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea name="message" rows="3" required></textarea>
-        </div>
-        <button type="submit" class="submit-btn">Send Message</button>
-      </form>
-      <div id="form-feedback"></div>
-      <div class="social-links">
-        <a href="#" target="_blank">LinkedIn</a>
-        <a href="#" target="_blank">GitHub</a>
-        <a href="mailto:group8@utm.my">Email</a>
+    <div id="contact-ui-wrapper">
+      <div id="contact-heading" style="text-align:center;color:var(--text);pointer-events:none;">
+        <h2 style="font-size:clamp(1.4rem,3vw,2.2rem);font-weight:600;margin:0;color:var(--text);">Contact Us</h2>
+        <p style="color:var(--muted);font-size:1rem;margin-top:0.2rem;">Connect with our team members directly</p>
+      </div>
+      <div id="contact-cards-container">
+        ${[window.MEMBER1_DATA, window.MEMBER2_DATA, window.MEMBER3_DATA, window.MEMBER4_DATA].map(m => `
+          <div class="contact-card">
+            <img class="profile-pic" src="${m.about.image || 'https://via.placeholder.com/150/cdb8db/4a4038?text=Profile'}" alt="${m.name}" />
+            <div class="name">${m.name}</div>
+            <div class="contact-links">
+              ${(m.contact && m.contact.phone) ? `<a href="https://wa.me/6${m.contact.phone.replace(/[^0-9]/g, '')}" target="_blank" title="WhatsApp">📞 ${m.contact.phone}</a>` : ''}
+              <a href="${(m.contact && m.contact.linkedin) ? (m.contact.linkedin.startsWith('http') ? m.contact.linkedin : 'https://' + m.contact.linkedin) : '#'}" target="_blank" title="LinkedIn Profile">🔗 LinkedIn</a>
+              ${(m.contact && m.contact.github) ? `<a href="${(m.contact.github.startsWith('http') ? m.contact.github : 'https://' + m.contact.github)}" target="_blank" title="GitHub Profile">💻 GitHub</a>` : ''}
+              <span class="non-link">📧 ${(m.contact && m.contact.email) ? m.contact.email : 'contact@' + m.name.split(' ')[0].toLowerCase() + '.com'}</span>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div id="contact-form-container">
+        <h3>Or send a direct message</h3>
+        <form id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" name="name" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea name="message" rows="3" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+        <div id="form-feedback"></div>
       </div>
     </div>
-    <div class="hint" style="color:var(--muted2);">drag to orbit · use arrow keys to nudge</div>
+    <div class="hint" style="color:var(--muted2); bottom: 10px;">drag to orbit · scroll inside to see form</div>
   `;
 
   // 3D Scene
@@ -136,6 +210,10 @@
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(sectionEl.clientWidth, sectionEl.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.domElement.style.position = 'absolute';
+  renderer.domElement.style.top = '0';
+  renderer.domElement.style.left = '0';
+  renderer.domElement.style.zIndex = '1';
   sectionEl.appendChild(renderer.domElement);
 
   const controls = new THREE.OrbitControls(camera, renderer.domElement);

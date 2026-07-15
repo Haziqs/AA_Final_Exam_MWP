@@ -2,6 +2,12 @@
 
 window.MEMBER4_DATA = {
   name: 'Harresh a/l Uthayakumar',
+  contact: {
+    phone: '013-698 1824',
+    email: 'harresh@graduate.utm.my',
+    linkedin: 'https://www.linkedin.com/in/harresh-uthayakumar-506b80242',
+    github: 'https://github.com/harresh138'
+  },
   about: { 
     image: 'assets/img/member4/haresh.jpeg',
     role: 'AI & Data Scientist', 

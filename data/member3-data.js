@@ -2,6 +2,12 @@
 
 window.MEMBER3_DATA = {
   name: 'Muhammad Haikal bin Japri',
+  contact: {
+    phone: '011-1580 0511',
+    email: 'haikal04@graduate.utm.my',
+    linkedin: 'https://www.linkedin.com/in/muhammadhaikalbinjapri',
+    github: 'https://github.com/hyekaljap'
+  },
   about: {
     image: 'assets/img/member3/haikal.jpeg',
     role: 'Software Engineer',
