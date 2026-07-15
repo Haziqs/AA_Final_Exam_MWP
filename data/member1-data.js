@@ -2,6 +2,12 @@
 
 window.MEMBER1_DATA = {
   name: 'Haziq bin Shahmen',
+  contact: {
+    phone: '011-5333 1643',
+    email: 'haziq-04@graduate.utm.my',
+    linkedin: 'https://www.linkedin.com/in/haziqshahmen/',
+    github: 'https://github.com/Haziqs'
+  },
   about: {
     image: 'assets/img/member1/haziq passport.png',
     role: 'Frontend Developer',

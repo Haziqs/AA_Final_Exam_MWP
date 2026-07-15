@@ -2,6 +2,12 @@
 
 window.MEMBER2_DATA = {
   name: 'Faris Iskandar bin Zamani',
+  contact: {
+    phone: '011-1044 4533',
+    email: 'farisiskandar@graduate.utm.my',
+    linkedin: 'https://www.linkedin.com/in/faris-iskandar-zamani-06467a422/',
+    github: 'https://github.com/Fariskandar0193'
+  },
   about: {
     image: 'assets/img/member2/faris.jpeg',
     role: 'Data & UX Analyst',

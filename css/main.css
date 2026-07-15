@@ -19,6 +19,12 @@ section {
   overflow: hidden;
 }
 
+#contact {
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
+}
+
 section canvas {
   display: block;
 }
@@ -120,6 +126,8 @@ body.light-theme {
   --gradient-text: linear-gradient(135deg, #cdb8db, #e8b4b8);
   --footer-bg: #f2ede7;
   --footer-border: rgba(0, 0, 0, 0.04);
+  --text-glow: rgba(255, 255, 255, 0.9);
+  --hero-span: #7a5c8c;
 }
 
 body.dark-theme {
@@ -150,6 +158,8 @@ body.dark-theme {
   --gradient-text: linear-gradient(135deg, #5ee7ff, #b57bff);
   --footer-bg: #0a0810;
   --footer-border: rgba(255, 255, 255, 0.03);
+  --text-glow: rgba(0, 0, 0, 0.9);
+  --hero-span: #5ee7ff;
 }
 
 body {
@@ -195,6 +205,7 @@ nav .btn-primary {
   pointer-events: none;
   width: 90%;
   max-width: 800px;
+  text-shadow: 0 2px 14px var(--text-glow), 0 0 24px var(--text-glow), 0 0 8px var(--text-glow);
 }
 
 #hero-text h1 {
@@ -205,22 +216,23 @@ nav .btn-primary {
 }
 
 #hero-text h1 span {
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--hero-span);
 }
 
 #hero-text .tagline {
   font-size: clamp(1rem, 1.6vw, 1.3rem);
-  color: var(--muted);
+  color: var(--text);
+  font-weight: 500;
   margin: 0.4rem 0 0.2rem;
 }
 
 #hero-text .subtitle {
   font-size: 0.9rem;
-  color: var(--muted2);
+  color: var(--text);
+  opacity: 0.85;
   max-width: 440px;
   margin: 0.5rem auto 0;
+  font-weight: 500;
 }
 
 /* ---------- HINT ---------- */
